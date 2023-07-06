@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail && cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+RESOURCES='public'
+DIST_FOLDER='dist'
+
+rm -rf "$DIST_FOLDER"
+echo "Copying static assets to dist folder"
+cp -r "$RESOURCES" "$DIST_FOLDER"
+
+echo "Installing npm dependencies"
+npm ci
+
+echo "Building JavaScript bundle"
+npx shadow-cljs release app
